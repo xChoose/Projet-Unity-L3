@@ -16,8 +16,16 @@ public class Cases
         return item;
     }
 
+    public void setItem(Items item) {
+        this.item = item;
+    }
+
     public int getCapacity() {
         return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public void Add(Items newItem, int newCapacity) 
@@ -25,7 +33,7 @@ public class Cases
         if (item == null) {
             item = newItem;
         }
-        capacity = newCapacity;
+        capacity += newCapacity;
     }
 
     public void Vider()
