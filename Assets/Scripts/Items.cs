@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName="Items", menuName = "Items/New Item")] //Menu personnalisé pour crée de nouveau item sur unity directement
 public class Items : ScriptableObject
 {
+    [SerializeField] private Sprite image;
     [SerializeField] private string id_item;
     [SerializeField] private int max_capacity;
 
@@ -13,11 +14,11 @@ public class Items : ScriptableObject
         this.max_capacity = max_capacity;
     }
 
-    public string getIdItem() {
+    public string GetIdItem() {
         return id_item;
     }
 
-    public int getMaxCapacity() {
+    public int GetMaxCapacity() {
         return max_capacity;
     }
 }

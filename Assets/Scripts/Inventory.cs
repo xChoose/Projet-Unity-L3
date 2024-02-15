@@ -6,7 +6,7 @@ using UnityEditor;
 public class Inventory : MonoBehaviour
 {
     public Items item; 
-    [SerializeField] private static int l = 10;
+    [SerializeField] private static int l = 7;
     [SerializeField] private static int w = 3;
     private List<Cases> inventaire = new List<Cases>();
     private Cases dernierSlot = null;
@@ -14,42 +14,24 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string cheminDossierItems = "Assets/Scripts/InstancesItems";
-        string[] fichiers = AssetDatabase.FindAssets("", new[] {cheminDossierItems});
-        Dictionary<string, Items> instancesItems = new Dictionary<string,Items>();
-        int i = 0;
-
-        foreach(string fichierID in fichiers) {
-            i++;
-            string cheminItem = AssetDatabase.GUIDToAssetPath(fichierID);
-            Items itemChargé = AssetDatabase.LoadAssetAtPath<Items>(cheminItem);
-            if (itemChargé != null) {
-                instancesItems.Add(itemChargé.getIdItem(),itemChargé);
-            }
-            else {
-                Debug.LogError("Impossible de charger l'item à partir du chemin : " + cheminItem);
-            }
-            Debug.Log("Items " + i + ": " + itemChargé.name);
-        }
-
-
-        /*initInventaire();
-        AddItem(item,10);
-        SwapCases(inventaire[0], inventaire[3]);
-        dernierSlot = inventaire[3];
-        DropItem();
-        for (int i = 0; i<l*w; i++) {
-            Debug.Log("Case " + i + ": " + inventaire[i].getItem() + " Capacity : " + inventaire[i].getCapacity());
-        }*/
+        InitInventaire();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
-    public void initInventaire() {
+    public int GetTaille() 
+    {
+        return l*w;
+    }
+
+    public Cases GetCases(int i) {
+        return inventaire[i];
+    }
+
+    public void InitInventaire() {
         for (int i = 0; i < l*w; i++) {
             inventaire.Add(new Cases(null,0));
         }
@@ -58,11 +40,11 @@ public class Inventory : MonoBehaviour
     public void AddItem(Items item, int newCapacity){
         Cases slot = FindItemCase(item);
         if (slot != null) {
-            if (slot.getCapacity() + newCapacity <= slot.getItem().getMaxCapacity()) {
+            if (slot.GetCapacity() + newCapacity <= slot.GetItem().GetMaxCapacity()) {
                 slot.Add(item, newCapacity);
             }
             else {
-                int reste = slot.getItem().getMaxCapacity() - slot.getCapacity();
+                int reste = slot.GetItem().GetMaxCapacity() - slot.GetCapacity();
                 newCapacity -= reste;
                 slot.Add(item, reste);
                 AddItem(item,newCapacity);
@@ -78,7 +60,7 @@ public class Inventory : MonoBehaviour
 
     private Cases FindItemCase(Items item) {
         foreach(Cases slot in inventaire) {
-            if(slot.getItem() == item && slot.getCapacity() < slot.getItem().getMaxCapacity()) {
+            if(slot.GetItem() == item && (slot.GetCapacity() < slot.GetItem().GetMaxCapacity())) {
                 return slot;
             }
         }
@@ -87,14 +69,14 @@ public class Inventory : MonoBehaviour
 
     private Cases FindEmptyCase(){
         foreach(Cases slot in inventaire) {
-            if(slot.getItem() == null) {
+            if(slot.GetItem() == null) {
                 return slot;
             }
         }
         return null;
     }
 
-    /*private void onClickCases() {
+    /*private void OnClickCases() {
         if (Input.GetMouseButtonDown(0)) {
             if (dernierSlot == null) {
                 dernierSlot = //Mettre la case où le click se trouve
@@ -106,18 +88,18 @@ public class Inventory : MonoBehaviour
     }*/
 
     public void SwapCases(Cases slot1, Cases slot2){
-        Items item = slot1.getItem();
-        int capacity = slot1.getCapacity();
-        slot1.setItem(slot2.getItem());
-        slot1.setCapacity(slot2.getCapacity());
-        slot2.setItem(item);
-        slot2.setCapacity(capacity);
+        Items item = slot1.GetItem();
+        int capacity = slot1.GetCapacity();
+        slot1.SetItem(slot2.GetItem());
+        slot1.SetCapacity(slot2.GetCapacity());
+        slot2.SetItem(item);
+        slot2.SetCapacity(capacity);
     }
 
     public void DropItem() {
         if (dernierSlot != null) {
-            dernierSlot.setCapacity(dernierSlot.getCapacity()-1);
-            if (dernierSlot.getCapacity() <= 0) {
+            dernierSlot.SetCapacity(dernierSlot.GetCapacity()-1);
+            if (dernierSlot.GetCapacity() <= 0) {
                 dernierSlot.Vider();
             }
         }

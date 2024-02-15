@@ -12,19 +12,19 @@ public class Cases
         this.capacity = capacity;
     }
 
-    public Items getItem() {
+    public Items GetItem() {
         return item;
     }
 
-    public void setItem(Items item) {
+    public void SetItem(Items item) {
         this.item = item;
     }
 
-    public int getCapacity() {
+    public int GetCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void SetCapacity(int capacity) {
         this.capacity = capacity;
     }
 
