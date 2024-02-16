@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c833faa79085e4781acc052eeb419c, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
-  image: {fileID: -1796583628, guid: c876f5d01a71b0d4d9889032d82c39db, type: 3}
+  image: {fileID: 21300000, guid: d019bf80072e0ae419cbd7febd4ddf9e, type: 3}
   id_item: 1
   max_capacity: 64

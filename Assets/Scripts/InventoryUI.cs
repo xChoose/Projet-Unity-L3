@@ -64,6 +64,7 @@ public class InventoryUI : MonoBehaviour
             inventaireUI[index2] = tmp;
 
             inventaire.SwapCases(index1,index2);
+            slotStock = null;
         }
     }
 
