@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         InitInventaire();
+        AddItem(item,10);
     }
 
     // Update is called once per frame
@@ -76,24 +77,13 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    /*private void OnClickCases() {
-        if (Input.GetMouseButtonDown(0)) {
-            if (dernierSlot == null) {
-                dernierSlot = //Mettre la case où le click se trouve
-            }
-            else {
-                SwapCases(//Cases actuel de la souris, dernierSlot);
-            }
-        }
-    }*/
-
-    public void SwapCases(Cases slot1, Cases slot2){
-        Items item = slot1.GetItem();
-        int capacity = slot1.GetCapacity();
-        slot1.SetItem(slot2.GetItem());
-        slot1.SetCapacity(slot2.GetCapacity());
-        slot2.SetItem(item);
-        slot2.SetCapacity(capacity);
+    public void SwapCases(int slot1, int slot2){
+        Items item = inventaire[slot1].GetItem();
+        int capacity = inventaire[slot1].GetCapacity();
+        inventaire[slot1].SetItem(inventaire[slot2].GetItem());
+        inventaire[slot1].SetCapacity(inventaire[slot2].GetCapacity());
+        inventaire[slot2].SetItem(item);
+        inventaire[slot2].SetCapacity(capacity);
     }
 
     public void DropItem() {
@@ -105,3 +95,4 @@ public class Inventory : MonoBehaviour
         }
     }
 }
+ 

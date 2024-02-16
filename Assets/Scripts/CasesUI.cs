@@ -11,7 +11,7 @@ public class CasesUI : MonoBehaviour
     void Start()
     {
         bouton = GetComponent<Button>();
-        go = bouton.onClick.AddListener(() => OnClickButton());
+        bouton.onClick.AddListener(() => OnClickButton());
     }
 
     // Update is called once per frame
@@ -19,11 +19,13 @@ public class CasesUI : MonoBehaviour
     {   
     }
 
-    public GameObject OnClickButton()
+    public void OnClickButton()
     {
-        return this.gameObject;
-        // Faites ce que vous voulez avec le GameObject du bouton ici
+        GameObject slot = this.gameObject;
+        InventoryUI inventoryUIScript = GetComponentInParent<InventoryUI>();
+
+        inventoryUIScript.SwapCasesUI(slot);
     }
 
-    
+
 }
