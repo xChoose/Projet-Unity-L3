@@ -7,17 +7,19 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private GameObject inventaire;
-
-    private Dictionary<string, Items> instancesItems = new Dictionary<string, Items>();
+    private Dictionary<int, Items> instancesItems = new Dictionary<int, Items>();
 
     // Start is called before the first frame update
     void Start()
     {
         inventaire = GameObject.Find("Inventory");
         inventaire.gameObject.SetActive(false);
-        LoadInstancesItems();
     }
 
+    void Awake() 
+    {
+        LoadInstancesItems();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -29,13 +31,16 @@ public class GameManager : MonoBehaviour
                 inventaire.gameObject.SetActive(true);
             }
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            inventaire.GetComponent<Inventory>().DropItem();
+        }
     }
 
     void LoadInstancesItems() 
     {
         string cheminDossierItems = "Assets/Scripts/InstancesItems";
         string[] fichiers = AssetDatabase.FindAssets("", new[] {cheminDossierItems});
-        Dictionary<string, Items> instancesItems = new Dictionary<string,Items>();
         int i = 0;
 
         foreach(string fichierID in fichiers) {
@@ -48,7 +53,11 @@ public class GameManager : MonoBehaviour
             else {
                 Debug.LogError("Impossible de charger l'item à partir du chemin : " + cheminItem);
             }
-            Debug.Log("Items " + i + ": " + itemChargé.name);
         }
+    }
+
+    public Items FindItemsDictionary(int index) 
+    {
+        return instancesItems[index];
     }
 }

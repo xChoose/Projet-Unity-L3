@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c833faa79085e4781acc052eeb419c, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 3bfa50e2c97b82a4c8c3d32d9b19c7a9, type: 3}
   id_item: 2
   max_capacity: 64

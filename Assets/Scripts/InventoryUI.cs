@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -18,13 +20,23 @@ public class InventoryUI : MonoBehaviour
     {
     }
 
-    GameObject GetSlotStock() {
+    public GameObject GetSlotStock() {
         return slotStock;
     }
 
-    void SetSlotStock(GameObject slot) {
+    public void SetSlotStock(GameObject slot) {
         slotStock = slot;
     } 
+
+    public int GetIndexSlot(GameObject slot) {
+        int index = 0;
+        for (int i = 0; i < inventaire.GetTaille(); i++) {
+            if (inventaireUI[i] == slot) {
+                index = i;
+            }
+        }
+        return index;
+    }
 
     void InitInventaireUI() 
     {
@@ -41,6 +53,29 @@ public class InventoryUI : MonoBehaviour
                 Debug.LogWarning("Un des objets à mettre en enfant est null !");
             }
         }
+        ShowItemAndQuantity();
+    }
+
+    public void ShowItemAndQuantity() {
+        List<Cases> inventory = inventaire.GetInventory();
+        for (int i = 0; i < inventaire.GetTaille(); i++) {
+            Image iconItem = inventaireUI[i].transform.GetChild(1).GetComponent<Image>();
+            // Si c'est une case vide alors on affiche rien
+            if (inventory[i].GetItem().GetIdItem() == 0) {
+                iconItem.color = new Color32(0,0,0,0);
+            } else {
+                iconItem.color = new Color32(255,255,255,255);
+                iconItem.sprite = inventory[i].GetItem().GetSprite();
+            }
+
+            TextMeshProUGUI quantity = inventaireUI[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            // Si c'est une case vide alors on affiche rien
+            if (inventory[i].GetItem().GetIdItem() == 0) {
+                quantity.text = " ";
+            } else {
+                quantity.text = inventory[i].GetCapacity().ToString();
+            }
+        }
     }
 
     public void SwapCasesUI(GameObject slot) {
@@ -48,24 +83,14 @@ public class InventoryUI : MonoBehaviour
             slotStock = slot;
         }
         else {
-            int index1 = 0;
-            int index2 = 0;
-            for (int i = 0; i < inventaire.GetTaille(); i++) {
-                if (inventaireUI[i] == slotStock) {
-                    index1 = i;
-                }
-                if (inventaireUI[i] == slot) {
-                    index2 = i;
-                }
-            }
-
-            GameObject tmp = inventaireUI[index1];
-            inventaireUI[index1] = inventaireUI[index2];
-            inventaireUI[index2] = tmp;
-
+            int index1 = GetIndexSlot(slotStock);
+            int index2 = GetIndexSlot(slot);
+            Debug.Log("slotStock : " + index1);
+            Debug.Log("slot : " + index2);
             inventaire.SwapCases(index1,index2);
             slotStock = null;
+
+            ShowItemAndQuantity();
         }
     }
-
 }

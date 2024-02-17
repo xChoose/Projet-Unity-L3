@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9c833faa79085e4781acc052eeb419c, type: 3}
-  m_Name: Wood
+  m_Name: Vide
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: d019bf80072e0ae419cbd7febd4ddf9e, type: 3}
-  id_item: 1
-  max_capacity: 64
+  sprite: {fileID: 0}
+  id_item: 0
+  max_capacity: 0

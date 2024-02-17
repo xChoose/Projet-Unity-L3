@@ -6,21 +6,30 @@ using UnityEditor;
 public class Inventory : MonoBehaviour
 {
     public Items item; 
+    public Items item2;
     [SerializeField] private static int l = 7;
     [SerializeField] private static int w = 3;
     private List<Cases> inventaire = new List<Cases>();
-    private Cases dernierSlot = null;
 
     // Start is called before the first frame update
     void Start()
     {
         InitInventaire();
         AddItem(item,10);
+        AddItem(item2,10);
+
+        /*for (int i = 0; i < GetTaille(); i++) {
+            Debug.Log("Case : " + i + " Item : " + inventaire[i].GetItem());
+        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public List<Cases> GetInventory() {
+        return inventaire;
     }
 
     public int GetTaille() 
@@ -33,8 +42,10 @@ public class Inventory : MonoBehaviour
     }
 
     public void InitInventaire() {
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        Items vide = gameManager.FindItemsDictionary(0);
         for (int i = 0; i < l*w; i++) {
-            inventaire.Add(new Cases(null,0));
+            inventaire.Add(new Cases(vide,0));
         }
     }
 
@@ -70,7 +81,7 @@ public class Inventory : MonoBehaviour
 
     private Cases FindEmptyCase(){
         foreach(Cases slot in inventaire) {
-            if(slot.GetItem() == null) {
+            if(slot.GetItem().GetIdItem() == 0) {
                 return slot;
             }
         }
@@ -78,20 +89,20 @@ public class Inventory : MonoBehaviour
     }
 
     public void SwapCases(int slot1, int slot2){
-        Items item = inventaire[slot1].GetItem();
-        int capacity = inventaire[slot1].GetCapacity();
-        inventaire[slot1].SetItem(inventaire[slot2].GetItem());
-        inventaire[slot1].SetCapacity(inventaire[slot2].GetCapacity());
-        inventaire[slot2].SetItem(item);
-        inventaire[slot2].SetCapacity(capacity);
+        Cases tmp = inventaire[slot1];
+        inventaire[slot1] = inventaire[slot2];
+        inventaire[slot2] = tmp;
     }
 
     public void DropItem() {
-        if (dernierSlot != null) {
-            dernierSlot.SetCapacity(dernierSlot.GetCapacity()-1);
-            if (dernierSlot.GetCapacity() <= 0) {
-                dernierSlot.Vider();
+        InventoryUI inventaireUI = transform.GetChild(0).GetComponent<InventoryUI>();
+        if (inventaireUI.GetSlotStock() != null) {
+            int index = inventaireUI.GetIndexSlot(inventaireUI.GetSlotStock());
+            inventaire[index].SetCapacity(inventaire[index].GetCapacity()-1);
+            if (inventaire[index].GetCapacity() <= 0) {
+                inventaire[index].Vider();
             }
+            inventaireUI.ShowItemAndQuantity();
         }
     }
 }

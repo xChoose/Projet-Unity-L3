@@ -11,8 +11,6 @@ public class CasesUI : MonoBehaviour
     {
         bouton = GetComponent<Button>();
         bouton.onClick.AddListener(() => OnClickButton());
-        /*Image iconItem = transform.GetChild(0).GetComponent<Image>();
-        iconItem.sprite = */
     }
 
     // Update is called once per frame
@@ -22,11 +20,13 @@ public class CasesUI : MonoBehaviour
 
     public void OnClickButton()
     {
-        GameObject slot = this.gameObject;
         InventoryUI inventoryUIScript = GetComponentInParent<InventoryUI>();
-
-        inventoryUIScript.SwapCasesUI(slot);
+        GameObject slot = this.gameObject;
+        if (inventoryUIScript.GetSlotStock() == null) {
+            inventoryUIScript.SetSlotStock(slot);
+        }
+        else {
+            inventoryUIScript.SwapCasesUI(slot);
+        }
     }
-
-
 }
