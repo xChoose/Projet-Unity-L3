@@ -5,8 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Sprite[] sprites;
-    [SerializeField] private Sprite player;
-    private float speed = 500f;
+    private float speed = 5f;
 
     public enum Direction { Left, Right, Up, Down }
 
