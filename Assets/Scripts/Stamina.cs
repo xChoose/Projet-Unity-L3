@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stamina : MonoBehaviour
+public class Stamina
 {
-    public float maxStamina = 100;
-    public float currentStamina;
+    private float maxStamina = 100f;
+    private float currentStamina;
 
 
     // Start is called before the first frame update
