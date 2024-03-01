@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
 
     private Stamina stamina = new Stamina(100);
     private bool needRegen = false;
-    private float regenStamina = 0.1f;
-    private float useStamina = 0.5f;
+    private float regenStamina = 0.01f;
+    private float useStamina = 0.05f;
 
     private float dashSpeed = 50f; // Vitesse de déplacement pendant le dash
     private float dashDuration = 0.2f; // Durée du dash en secondes
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //InvokeRepeating("LogMessage", 0f, 1f);
+        InvokeRepeating("LogMessage", 0f, 1f);
     }
 
     void LogMessage()
@@ -32,26 +32,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space) && stamina.GetCurrentStamina() > 0f && needRegen == false) {
-            Movement(speed * 5f);
-            stamina.UseStamina(useStamina);
-        } else if (Input.GetKeyDown(KeyCode.F) && !isDashing) {
-            StartCoroutine(Dash());
+        HandleMovement();
+    }
 
-            Movement(dashSpeed);
-        } else {
-            if (stamina.GetCurrentStamina() == 0f) {
-                needRegen = true;
-            } 
-            if (stamina.GetCurrentStamina() >= 10f) {
-                needRegen = false;
-            }
-            Movement(speed);
-            stamina.RegenStamina(regenStamina);
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Arbre") {
+            Debug.Log("Le joueur a touché un abre !");
         }
     }
 
-    void Movement(float speedValue) {
+    /*void Movement(float speedValue) {
         // Récupérer les valeurs des axes horizontal et vertical
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -60,6 +51,44 @@ public class Player : MonoBehaviour
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0f) * speedValue * Time.deltaTime;
 
         // Appliquer le déplacement au joueur
+        transform.Translate(movement);
+    }*/
+
+    void HandleMovement() {
+        float moveX = 0f;
+        float moveY = 0f;
+        Vector3 movement;
+
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+            moveX = -1f;
+        }
+        if (Input.GetKey(KeyCode.RightArrow)) {
+            moveX = 1f;
+        }
+        if (Input.GetKey(KeyCode.UpArrow)) {
+            moveY = 1f;
+        } 
+        if (Input.GetKey(KeyCode.DownArrow)) {
+            moveY = -1f;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && stamina.GetCurrentStamina() > 0f && needRegen == false) {
+            movement = new Vector3(moveX, moveY, 0f) * speed * 5f * Time.deltaTime;
+            stamina.UseStamina(useStamina);
+        } else if (Input.GetKeyDown(KeyCode.F) && !isDashing) {
+            StartCoroutine(Dash());
+            movement = new Vector3(moveX, moveY, 0f) * speed * dashSpeed * Time.deltaTime;
+        } else {
+            if (stamina.GetCurrentStamina() == 0f) {
+                needRegen = true;
+            } 
+            if (stamina.GetCurrentStamina() >= 10f) {
+                needRegen = false;
+            }
+            movement = new Vector3(moveX, moveY, 0f) * speed * Time.deltaTime;
+            stamina.RegenStamina(regenStamina);
+        }
+        
         transform.Translate(movement);
     }
 
@@ -77,7 +106,7 @@ public class Player : MonoBehaviour
             float currentSpeed = Mathf.Lerp(initialSpeed, targetSpeed, elapsedTime / dashDuration);
 
             // Déplacer le joueur en utilisant la nouvelle vitesse
-            Movement(currentSpeed);
+            HandleMovement();
 
             // Mettre à jour le temps écoulé
             elapsedTime += Time.deltaTime;
