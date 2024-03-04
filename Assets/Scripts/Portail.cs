@@ -1,34 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Portail : MonoBehaviour
 {
-    [SerializeField] private int idScene;
+    [SerializeField] private string sceneToLoad;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public int GetIdScene()
-    {
-        return idScene;
-    }
-
-    public void onTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Portail");
-            //SceneManager.LoadScene(idScene);
-        }
+        // Charger la scène spécifiée
+        //Debug.Log("Portal");
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
