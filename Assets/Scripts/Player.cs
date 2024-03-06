@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public Sprite[] sprites;
-    private float speed = 3f;
+    private float speed = 2f;
 
     private Stamina stamina = new Stamina(100);
     private bool needRegen = false;
-    private float regenStamina = 0.01f;
-    private float useStamina = 0.05f;
+    private float regenStamina = 0.05f;
+    private float useStamina = 0.1f;
 
     private float dashDistance = 6f; // Distance parcourue par le dash
     private float dashDuration = 0.2f; // Durée du dash en secondes
@@ -33,6 +34,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleMovement();
+    }
+
+    public Stamina GetStamina() {
+        return stamina;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -66,7 +71,7 @@ public class Player : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Space) && stamina.GetCurrentStamina() > 0f && needRegen == false) {
-            movement = new Vector3(moveX, moveY, 0f) * speed * 5f * Time.deltaTime;
+            movement = new Vector3(moveX, moveY, 0f) * speed * 2f * Time.deltaTime;
             stamina.UseStamina(useStamina);
         } else if (Input.GetKeyDown(KeyCode.F) && !isDashing && stamina.GetCurrentStamina() > 20f){
             StartCoroutine(Dash(lastMoveDirection));
@@ -95,19 +100,6 @@ public class Player : MonoBehaviour
         Vector3 endPos = startPos + direction.normalized * dashDistance;
         Debug.Log("Start : " + startPos);
         Debug.Log("End : " + endPos);
-
-        // Vérifier s'il y a un objet à l'endroit d'arrivée du dash
-        RaycastHit2D hit = Physics2D.Raycast(startPos, Vector2.up, dashDistance, 1);
-        if (hit.collider != null)
-        {
-            Debug.Log("Collision détectée avec : " + hit.collider.name);
-            // Ici, vous pouvez ajouter du code pour réagir à la collision détectée
-        }
-        else
-        {
-            Debug.Log("Pas de collision détectée !");
-            // Ici, vous pouvez ajouter du code pour gérer le cas où aucun objet n'est touché
-        }
         
         while (Time.time - startTime < dashDuration)
         {

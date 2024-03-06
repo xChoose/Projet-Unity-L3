@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     {
         inventaire = GameObject.Find("Inventory");
         inventaire.gameObject.SetActive(false);
+
     }
 
     void Awake() 

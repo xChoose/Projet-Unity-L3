@@ -10,7 +10,6 @@ public class Portail : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Charger la scène spécifiée
-        //Debug.Log("Portal");
         SceneManager.LoadScene(sceneToLoad);
     }
 }
