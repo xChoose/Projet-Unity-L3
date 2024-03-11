@@ -23,6 +23,10 @@ public class Inventory : MonoBehaviour
         }*/
     }
 
+    void Awake() {
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -95,7 +99,7 @@ public class Inventory : MonoBehaviour
     }
 
     public void DropItem() {
-        InventoryUI inventaireUI = transform.GetChild(0).GetComponent<InventoryUI>();
+        InventoryUI inventaireUI = GameObject.Find("Content").GetComponent<InventoryUI>();
         if (inventaireUI.GetSlotStock() != null) {
             int index = inventaireUI.GetIndexSlot(inventaireUI.GetSlotStock());
             inventaire[index].SetCapacity(inventaire[index].GetCapacity()-1);

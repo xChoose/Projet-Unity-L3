@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 71766193}
   - component: {fileID: 71766194}
   - component: {fileID: 71766195}
+  - component: {fileID: 71766196}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -203,8 +204,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71766190}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.93, y: -6.52, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.92993164, y: -6.5200195, z: 0}
   m_LocalScale: {x: 2.4118, y: 2.2308, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -295,6 +296,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.46821648, y: 0.13102174}
   m_EdgeRadius: 0
+--- !u!114 &71766196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71766190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8166341a00f57334d9e5b43a5a9c6389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 40acb8fc4769648449aaf2c1fa64ecda, type: 2}
+  item2: {fileID: 11400000, guid: 63b76b9c84578614db036e75984b0c8e, type: 2}
 --- !u!1 &103859144
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be39c1d9fb99c04e89eb8cf1fdfb807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventaire: {fileID: 1178760783}
+  inventaire: {fileID: 71766196}
   prefabSlot: {fileID: 2294144004673997399, guid: 611e2a341fcf0e64daca7fd9d8b792e4, type: 3}
 --- !u!1 &795026705
 GameObject:
@@ -809,7 +824,6 @@ GameObject:
   - component: {fileID: 1178760780}
   - component: {fileID: 1178760782}
   - component: {fileID: 1178760781}
-  - component: {fileID: 1178760783}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -875,20 +889,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178760779}
   m_CullTransparentMesh: 1
---- !u!114 &1178760783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178760779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8166341a00f57334d9e5b43a5a9c6389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 63b76b9c84578614db036e75984b0c8e, type: 2}
-  item2: {fileID: 11400000, guid: 40acb8fc4769648449aaf2c1fa64ecda, type: 2}
 --- !u!1 &1249109362
 GameObject:
   m_ObjectHideFlags: 0

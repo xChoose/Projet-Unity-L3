@@ -16,6 +16,11 @@ public class InventoryUI : MonoBehaviour
         InitInventaireUI();
     }
 
+    void Awake() 
+    {
+        
+    }
+
     void Update()
     {
     }
@@ -40,7 +45,6 @@ public class InventoryUI : MonoBehaviour
 
     void InitInventaireUI() 
     {
-
         for (int i = 0; i < inventaire.GetTaille(); i++) {
             GameObject instantiatedPrefab = Instantiate(prefabSlot, transform.position, Quaternion.identity);
             inventaireUI.Add(instantiatedPrefab);

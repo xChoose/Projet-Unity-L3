@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public Sprite[] sprites;
     private float speed = 2f;
 
+    private GameObject inventaire;
+
     private Stamina stamina = new Stamina(100);
     private bool needRegen = false;
     private float regenStamina = 0.05f;
@@ -23,6 +25,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         //InvokeRepeating("LogMessage", 0f, 1f);
+        inventaire = GameObject.Find("Inventory");
+        inventaire.gameObject.SetActive(false);
     }
 
     void LogMessage()
@@ -34,6 +38,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (inventaire.gameObject.activeSelf) {
+                inventaire.gameObject.SetActive(false);
+            } else {
+                inventaire.gameObject.SetActive(true);
+            }
+        }
+        if (inventaire.gameObject.activeSelf && Input.GetKeyDown(KeyCode.X))
+        {
+            GetComponent<Inventory>().DropItem();
+        }
     }
 
     public Stamina GetStamina() {

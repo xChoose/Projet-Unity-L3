@@ -6,15 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private GameObject inventaire;
     private Dictionary<int, Items> instancesItems = new Dictionary<int, Items>();
 
     // Start is called before the first frame update
     void Start()
     {
-        inventaire = GameObject.Find("Inventory");
-        inventaire.gameObject.SetActive(false);
-
+    
     }
 
     void Awake() 
@@ -24,18 +21,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (inventaire.gameObject.activeSelf) {
-                inventaire.gameObject.SetActive(false);
-            } else {
-                inventaire.gameObject.SetActive(true);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            inventaire.GetComponent<Inventory>().DropItem();
-        }
+        
     }
 
     void LoadInstancesItems() 
