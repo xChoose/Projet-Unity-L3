@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class StaminaUI : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    private Player player;
     private Image staminaBar;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame

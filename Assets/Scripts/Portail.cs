@@ -8,16 +8,21 @@ public class Portail : MonoBehaviour
     [SerializeField] private string sceneToLoad;
     private int etat = 0;
 
+    private Animation anim;
+
+    private void Awake() {
+        anim = gameObject.GetComponent<Animation>();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Charger la scène spécifiée
         if (collision.collider is BoxCollider2D)
         {
-            Debug.Log("etat");
             etat = 1;
 
             GameManager.Instance.SaveStats();
-
+            StartCoroutine(PortalClose());
             SceneManager.LoadScene(sceneToLoad);
         }
         if (collision.collider is CircleCollider2D)
@@ -27,12 +32,11 @@ public class Portail : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Ouvert");
         etat = 2;
+        StartCoroutine(PortalOpen());
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        Debug.Log("Fermer");
         etat = 0;
     }
 
@@ -40,6 +44,14 @@ public class Portail : MonoBehaviour
         return etat;
     }
 
+    IEnumerator PortalOpen() {
+        anim.Play("Portal open");
+        yield return new WaitForSeconds(0.3f);
+    }
 
+    IEnumerator PortalClose() {
+        anim.Play("Portal close");
+        yield return new WaitForSeconds(10f);
+    }
     
 }

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private float speed = 2f;
 
     private GameObject inventaire;
+    private List<Cases> stockInventory;
 
     private Stamina stamina = new Stamina(100);
     private bool needRegen = false;
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*if (stockInventory == null) {
+            InitInventaire(stockInventory);
+        }*/
         //InvokeRepeating("LogMessage", 0f, 1f);
         inventaire = GameObject.Find("Inventory");
         inventaire.gameObject.SetActive(false);
@@ -122,8 +126,6 @@ public class Player : MonoBehaviour
         float startTime = Time.time;
         Vector3 startPos = transform.position;
         Vector3 endPos = startPos + direction.normalized * dashDistance;
-        Debug.Log("Start : " + startPos);
-        Debug.Log("End : " + endPos);
         
         while (Time.time - startTime < dashDuration)
         {

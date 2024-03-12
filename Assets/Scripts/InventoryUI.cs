@@ -29,6 +29,10 @@ public class InventoryUI : MonoBehaviour
         return slotStock;
     }
 
+    public void SetInventory(Inventory newInventaire) {
+        inventaire = newInventaire;
+    }
+
     public void SetSlotStock(GameObject slot) {
         slotStock = slot;
     } 

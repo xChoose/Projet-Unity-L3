@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
     private Dictionary<int, Items> instancesItems = new Dictionary<int, Items>();
 
     private bool lancement = true;
-    private Player player;
+    public GameObject player;
+    private Player playerScript;
     private Stamina stamina;
+    private List<Cases> inventory;
 
 
     // Instance statique du GameManager
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        player = GameObject.Find("Player").GetComponent<Player>();
+        playerScript = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Méthode pour accéder à l'instance du GameManager
@@ -46,6 +48,10 @@ public class GameManager : MonoBehaviour
 
     public Stamina GetStamina() {
         return stamina;
+    }
+
+    public List<Cases> GetInventory() {
+        return inventory;
     }
 
     public bool GetLancement() {
@@ -72,7 +78,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void SaveStats() {
-        stamina = player.GetStamina();
+        stamina = playerScript.GetStamina();
+        inventory = player.GetComponent<Inventory>().GetInventory();
         if (GameObject.Find("StatsNewScene") == null) {
             lancement = false;
         }

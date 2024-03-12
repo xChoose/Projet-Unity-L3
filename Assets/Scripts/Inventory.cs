@@ -9,22 +9,25 @@ public class Inventory : MonoBehaviour
     public Items item2;
     [SerializeField] private static int l = 7;
     [SerializeField] private static int w = 3;
-    private List<Cases> inventaire = new List<Cases>();
+    private List<Cases> inventaire;
 
     // Start is called before the first frame update
     void Start()
     {
-        InitInventaire();
-        AddItem(item,10);
-        AddItem(item2,10);
+        if (GameManager.Instance.GetLancement()) {
+            inventaire = new List<Cases>();
+            InitInventaire();
+            AddItem(item,10);
+            AddItem(item2,10);
+        }
+        
 
         /*for (int i = 0; i < GetTaille(); i++) {
-            Debug.Log("Case : " + i + " Item : " + inventaire[i].GetItem());
+            Debug.Log("Inventaire : " + inventaire);
         }*/
     }
 
     void Awake() {
-        
     }
 
     // Update is called once per frame
@@ -34,6 +37,10 @@ public class Inventory : MonoBehaviour
 
     public List<Cases> GetInventory() {
         return inventaire;
+    }
+
+    public void SetInventory(List<Cases> newInventory) {
+        inventaire = newInventory;
     }
 
     public int GetTaille() 
