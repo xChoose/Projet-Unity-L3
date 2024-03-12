@@ -16,9 +16,9 @@ public class Portail : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Charger la scène spécifiée
         if (collision.collider is BoxCollider2D)
         {
+            // Si collision alors on met le portail en état
             etat = 1;
 
             GameManager.Instance.SaveStats();
@@ -32,11 +32,13 @@ public class Portail : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        // Si triggerEnter alors on ouvre le portail
         etat = 2;
         StartCoroutine(PortalOpen());
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
+        // Si triggerExit alors on ferme le portail
         etat = 0;
     }
 
@@ -51,7 +53,7 @@ public class Portail : MonoBehaviour
 
     IEnumerator PortalClose() {
         anim.Play("Portal close");
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(0.3f);
     }
     
 }

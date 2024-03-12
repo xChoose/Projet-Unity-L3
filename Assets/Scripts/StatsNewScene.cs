@@ -9,7 +9,6 @@ public class StatsNewScene : MonoBehaviour
     private Inventory inventaire;
     public bool lancement;
 
-    // Start is called before the first frame update
     void Awake()
     { 
         lancement  = GameManager.Instance.GetLancement();
@@ -25,6 +24,7 @@ public class StatsNewScene : MonoBehaviour
             GameManager.Instance.player.GetComponent<Inventory>().SetInventory(GameManager.Instance.GetInventory());
             GameObject.Find("Content").GetComponent<InventoryUI>().SetInventory(playerScript.GetComponent<Inventory>());
             playerScript.SetStamina(GameManager.Instance.GetStamina()); 
+            playerScript.SetHealth(GameManager.Instance.GetHealth());
         }
     }
 

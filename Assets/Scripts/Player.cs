@@ -13,11 +13,9 @@ public class Player : MonoBehaviour
 
     private Stamina stamina = new Stamina(100);
     private bool needRegen = false;
-    private float regenStamina = 0.02f;
-    private float useStamina = 0.1f;
 
-    private float dashDistance = 5f; // Distance parcourue par le dash
-    private float dashDuration = 0.2f; // Durée du dash en secondes
+    private Health health = new Health(100);
+
     private bool isDashing = false; // Indique si le joueur est en train de dasher
 
     private Animator animator;
@@ -31,10 +29,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*if (stockInventory == null) {
-            InitInventaire(stockInventory);
-        }*/
-        //InvokeRepeating("LogMessage", 0f, 1f);
+        InvokeRepeating("CallRegenerateHealth",0f,5f);
         inventaire = GameObject.Find("Inventory");
         inventaire.gameObject.SetActive(false);
     }
@@ -79,11 +74,16 @@ public class Player : MonoBehaviour
         return GetComponent<Inventory>();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.name == "Arbre") {
-            Debug.Log("Le joueur a touché un abre !");
-        }
+    public Health GetHealth() {
+        return health;
+    }
+
+    public void SetHealth(Health newHealth) {
+        health = newHealth;
+    }
+
+    void CallRegenerateHealth() {
+        health.RegenerateHealth();
     }
 
     void HandleMovement() {
@@ -111,10 +111,10 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && stamina.GetCurrentStamina() > 0f && needRegen == false) {
             movement = new Vector3(moveX, moveY, 0f) * speed * 2f * Time.deltaTime;
-            stamina.UseStamina(useStamina);
-        } else if (Input.GetKeyDown(KeyCode.F) && !isDashing && stamina.GetCurrentStamina() > 20f){
+            stamina.UseStamina(stamina.GetUseStamina());
+        } else if (Input.GetKeyDown(KeyCode.F) && !isDashing && stamina.GetCurrentStamina() > 40f){
             StartCoroutine(Dash(lastMoveDirection));
-            stamina.UseStamina(useStamina*400);
+            stamina.UseStamina(stamina.GetUseStamina()*400);
             return;
         } else {
             if (stamina.GetCurrentStamina() == 0f) {
@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
                 needRegen = false;
             }
             movement = new Vector3(moveX, moveY, 0f) * speed * Time.deltaTime;
-            stamina.RegenStamina(regenStamina);
+            stamina.RegenStamina(stamina.GetRegen());
         }
 
         animator.SetFloat(horizontal,moveX);
@@ -143,11 +143,11 @@ public class Player : MonoBehaviour
 
         float startTime = Time.time;
         Vector3 startPos = transform.position;
-        Vector3 endPos = startPos + direction.normalized * dashDistance;
+        Vector3 endPos = startPos + direction.normalized * 5f;
         
-        while (Time.time - startTime < dashDuration)
+        while (Time.time - startTime < 0.2f) //0.2f est la durée d'un dash
         {
-            float t = (Time.time - startTime) / dashDuration;
+            float t = (Time.time - startTime) / 0.2f;
             transform.position = Vector3.Lerp(startPos, endPos, t);
             yield return null;
         }
@@ -155,4 +155,10 @@ public class Player : MonoBehaviour
         isDashing = false;
     }
 
+    /*void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Arbre") {
+            Debug.Log("Le joueur a touché un abre !");
+        }
+    }*/
 }

@@ -11,7 +11,6 @@ public class Inventory : MonoBehaviour
     [SerializeField] private static int w = 3;
     private List<Cases> inventaire;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (GameManager.Instance.GetLancement()) {
@@ -21,7 +20,6 @@ public class Inventory : MonoBehaviour
             AddItem(item2,10);
         }
         
-
         /*for (int i = 0; i < GetTaille(); i++) {
             Debug.Log("Inventaire : " + inventaire);
         }*/
@@ -29,12 +27,7 @@ public class Inventory : MonoBehaviour
 
     void Awake() {
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    
     public List<Cases> GetInventory() {
         return inventaire;
     }

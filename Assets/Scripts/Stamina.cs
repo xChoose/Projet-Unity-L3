@@ -6,24 +6,21 @@ public class Stamina
 {
     private float maxStamina = 100f;
     private float currentStamina;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private float regenStamina = 0.02f;
+    private float useStamina = 0.1f;
 
     public Stamina(float maxStamina)
     {
         this.maxStamina = maxStamina;
         currentStamina = maxStamina;
+    }
+    
+    public float GetRegen() {
+        return regenStamina;
+    }
+
+    public float GetUseStamina() {
+        return useStamina;
     }
 
     public float GetCurrentStamina()

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     private Player playerScript;
     private Stamina stamina;
+    private Health health;
     private List<Cases> inventory;
 
 
@@ -40,7 +41,6 @@ public class GameManager : MonoBehaviour
         playerScript = GameObject.Find("Player").GetComponent<Player>();
     }
 
-    // Méthode pour accéder à l'instance du GameManager
     public static GameManager Instance
     {
         get { return instance; }
@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
 
     public Stamina GetStamina() {
         return stamina;
+    }
+
+    public Health GetHealth() {
+        return health;
     }
 
     public List<Cases> GetInventory() {
@@ -77,16 +81,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Items FindItemsDictionary(int index) 
+    {
+        return instancesItems[index];
+    }
+
     public void SaveStats() {
         stamina = playerScript.GetStamina();
+        health = playerScript.GetHealth();
         inventory = player.GetComponent<Inventory>().GetInventory();
         if (GameObject.Find("StatsNewScene") == null) {
             lancement = false;
         }
-    }
-
-    public Items FindItemsDictionary(int index) 
-    {
-        return instancesItems[index];
     }
 }

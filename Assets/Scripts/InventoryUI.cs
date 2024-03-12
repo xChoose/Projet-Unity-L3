@@ -16,15 +16,6 @@ public class InventoryUI : MonoBehaviour
         InitInventaireUI();
     }
 
-    void Awake() 
-    {
-        
-    }
-
-    void Update()
-    {
-    }
-
     public GameObject GetSlotStock() {
         return slotStock;
     }
