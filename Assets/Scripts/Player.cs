@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     private Stamina stamina = new Stamina(100);
     private bool needRegen = false;
-    private float regenStamina = 0.05f;
+    private float regenStamina = 0.02f;
     private float useStamina = 0.1f;
 
     private float dashDistance = 6f; // Distance parcourue par le dash
@@ -54,6 +54,14 @@ public class Player : MonoBehaviour
 
     public Stamina GetStamina() {
         return stamina;
+    }
+
+    public void SetStamina(Stamina newStamina) {
+        stamina = newStamina;
+    }
+
+    public Inventory GetInventory() {
+        return GetComponent<Inventory>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
