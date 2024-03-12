@@ -16,9 +16,15 @@ public class Player : MonoBehaviour
     private float regenStamina = 0.02f;
     private float useStamina = 0.1f;
 
-    private float dashDistance = 6f; // Distance parcourue par le dash
+    private float dashDistance = 5f; // Distance parcourue par le dash
     private float dashDuration = 0.2f; // Durée du dash en secondes
     private bool isDashing = false; // Indique si le joueur est en train de dasher
+
+    private Animator animator;
+    private const string horizontal = "Horizontal";
+    private const string vertical = "Vertical";
+    private const string lastHorizontal = "LastHorizontal";
+    private const string lastVertical = "LastVertical";
 
     public enum Direction { Left, Right, Up, Down }
 
@@ -33,6 +39,10 @@ public class Player : MonoBehaviour
         inventaire.gameObject.SetActive(false);
     }
 
+    void Awake() {
+        animator = GetComponent<Animator>();
+    }
+
     void LogMessage()
     {
         Debug.Log("L'endurance est de : " + stamina.GetCurrentStamina() + " !");
@@ -42,6 +52,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleMovement();
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (inventaire.gameObject.activeSelf) {
@@ -103,7 +114,7 @@ public class Player : MonoBehaviour
             stamina.UseStamina(useStamina);
         } else if (Input.GetKeyDown(KeyCode.F) && !isDashing && stamina.GetCurrentStamina() > 20f){
             StartCoroutine(Dash(lastMoveDirection));
-            
+            stamina.UseStamina(useStamina*400);
             return;
         } else {
             if (stamina.GetCurrentStamina() == 0f) {
@@ -114,6 +125,13 @@ public class Player : MonoBehaviour
             }
             movement = new Vector3(moveX, moveY, 0f) * speed * Time.deltaTime;
             stamina.RegenStamina(regenStamina);
+        }
+
+        animator.SetFloat(horizontal,moveX);
+        animator.SetFloat(vertical,moveY);
+        if (movement != Vector3.zero) {
+            animator.SetFloat(lastHorizontal,moveX);
+            animator.SetFloat(lastVertical,moveY);
         }
         
         transform.Translate(movement);
