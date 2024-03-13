@@ -155,10 +155,29 @@ public class Player : MonoBehaviour
         isDashing = false;
     }
 
+    void onTriggerEnter2D(Collider2D other) {
+        if (Input.GetKeyDown("E")) {
+            GameObject inventoryChest = GameObject.Find("Inventory chest");
+            if (inventoryChest.gameObject.activeSelf) {
+                inventoryChest.gameObject.SetActive(false);
+            } else {
+                inventoryChest.gameObject.SetActive(true);
+            }
+            if (inventaire.gameObject.activeSelf) {
+                inventaire.gameObject.SetActive(false);
+            } else {
+                inventaire.gameObject.SetActive(true);
+                inventaire.gameObject.transform.position = new Vector3(6f,-230f,0f);
+            }
+        }
+    }
+
     /*void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Arbre") {
             Debug.Log("Le joueur a touché un abre !");
         }
     }*/
+
+
 }

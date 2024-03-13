@@ -14,10 +14,18 @@ public class GameManager : MonoBehaviour
     private Stamina stamina;
     private Health health;
     private List<Cases> inventory;
+    private GameObject inventoryChest;
 
 
     // Instance statique du GameManager
     private static GameManager instance;
+
+    void Start() {
+        inventoryChest = GameObject.Find("InventoryChest");
+        if (inventoryChest != null) {
+            inventoryChest.gameObject.SetActive(false);
+        }
+    }
 
     void Awake() 
     {
@@ -90,6 +98,9 @@ public class GameManager : MonoBehaviour
         stamina = playerScript.GetStamina();
         health = playerScript.GetHealth();
         inventory = player.GetComponent<Inventory>().GetInventory();
+        for (int i =0; i < inventory.Count; i++) {
+            Debug.Log("Test :" + inventory[i].GetItem());
+        }
         if (GameObject.Find("StatsNewScene") == null) {
             lancement = false;
         }

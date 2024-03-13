@@ -21,8 +21,17 @@ public class StatsNewScene : MonoBehaviour
                 GameManager.Instance.player.name = "Player";
                 playerScript = GameObject.Find("Player").GetComponent<Player>();
             }
+
             GameManager.Instance.player.GetComponent<Inventory>().SetInventory(GameManager.Instance.GetInventory());
-            GameObject.Find("Content").GetComponent<InventoryUI>().SetInventory(playerScript.GetComponent<Inventory>());
+
+
+            List<Cases> test = GameManager.Instance.player.GetComponent<Inventory>().GetInventory();
+            for (int i =0; i < test.Count; i++) {
+                Debug.Log("Test :" + test[i].GetItem().GetIdItem());
+            }
+
+
+            GameObject.Find("Content").GetComponent<InventoryUI>().SetInventory(GameManager.Instance.player.GetComponent<Inventory>());
             playerScript.SetStamina(GameManager.Instance.GetStamina()); 
             playerScript.SetHealth(GameManager.Instance.GetHealth());
         }

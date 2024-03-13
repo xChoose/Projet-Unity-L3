@@ -7,17 +7,30 @@ public class Inventory : MonoBehaviour
 {
     public Items item; 
     public Items item2;
-    [SerializeField] private static int l = 7;
+    [SerializeField] private int l;
     [SerializeField] private static int w = 3;
     private List<Cases> inventaire;
+    private GameObject gameObjectInv;
 
+    private bool lancementPlayer = true;
+    private bool lancementChest = true;
+    
     void Start()
     {
+        gameObjectInv = gameObject;
         if (GameManager.Instance.GetLancement()) {
             inventaire = new List<Cases>();
             InitInventaire();
             AddItem(item,10);
             AddItem(item2,10);
+            lancementPlayer = false;
+        }
+        if (lancementChest && gameObjectInv.CompareTag("Chest")) {
+            inventaire = new List<Cases>();
+            InitInventaire();
+            AddItem(item,10);
+            AddItem(item2,10);
+            lancementChest = false;
         }
         
         /*for (int i = 0; i < GetTaille(); i++) {
