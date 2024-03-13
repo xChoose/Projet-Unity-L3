@@ -14,18 +14,12 @@ public class GameManager : MonoBehaviour
     private Stamina stamina;
     private Health health;
     private List<Cases> inventory;
-    private GameObject inventoryChest;
+    private Items[] items;
 
 
     // Instance statique du GameManager
     private static GameManager instance;
 
-    void Start() {
-        inventoryChest = GameObject.Find("InventoryChest");
-        if (inventoryChest != null) {
-            inventoryChest.gameObject.SetActive(false);
-        }
-    }
 
     void Awake() 
     {
@@ -72,35 +66,21 @@ public class GameManager : MonoBehaviour
 
     void LoadInstancesItems() 
     {
-        string cheminDossierItems = "Assets/Scripts/InstancesItems";
-        string[] fichiers = AssetDatabase.FindAssets("", new[] {cheminDossierItems});
-        int i = 0;
-
-        foreach(string fichierID in fichiers) {
-            i++;
-            string cheminItem = AssetDatabase.GUIDToAssetPath(fichierID);
-            Items itemChargé = AssetDatabase.LoadAssetAtPath<Items>(cheminItem);
-            if (itemChargé != null) {
-                instancesItems.Add(itemChargé.GetIdItem(),itemChargé);
-            }
-            else {
-                Debug.LogError("Impossible de charger l'item à partir du chemin : " + cheminItem);
-            }
-        }
+        items = Resources.LoadAll<Items>("InstancesItems/");
     }
 
     public Items FindItemsDictionary(int index) 
     {
-        return instancesItems[index];
+        return items[index];
     }
 
     public void SaveStats() {
         stamina = playerScript.GetStamina();
         health = playerScript.GetHealth();
         inventory = player.GetComponent<Inventory>().GetInventory();
-        for (int i =0; i < inventory.Count; i++) {
+        /*for (int i =0; i < inventory.Count; i++) {
             Debug.Log("Test :" + inventory[i].GetItem());
-        }
+        }*/
         if (GameObject.Find("StatsNewScene") == null) {
             lancement = false;
         }

@@ -10,27 +10,15 @@ public class Inventory : MonoBehaviour
     [SerializeField] private int l;
     [SerializeField] private static int w = 3;
     private List<Cases> inventaire;
-    private GameObject gameObjectInv;
-
-    private bool lancementPlayer = true;
-    private bool lancementChest = true;
+    [SerializeField] private GameObject nomInventaire;
     
     void Start()
     {
-        gameObjectInv = gameObject;
-        if (GameManager.Instance.GetLancement()) {
+        if (inventaire == null) {
             inventaire = new List<Cases>();
             InitInventaire();
             AddItem(item,10);
             AddItem(item2,10);
-            lancementPlayer = false;
-        }
-        if (lancementChest && gameObjectInv.CompareTag("Chest")) {
-            inventaire = new List<Cases>();
-            InitInventaire();
-            AddItem(item,10);
-            AddItem(item2,10);
-            lancementChest = false;
         }
         
         /*for (int i = 0; i < GetTaille(); i++) {
@@ -38,7 +26,8 @@ public class Inventory : MonoBehaviour
         }*/
     }
 
-    void Awake() {
+    public GameObject getNameInventory() {
+        return nomInventaire;
     }
     
     public List<Cases> GetInventory() {
@@ -60,7 +49,7 @@ public class Inventory : MonoBehaviour
 
     public void InitInventaire() {
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Items vide = gameManager.FindItemsDictionary(0);
+        Items vide = gameManager.FindItemsDictionary(1);
         for (int i = 0; i < l*w; i++) {
             inventaire.Add(new Cases(vide,0));
         }

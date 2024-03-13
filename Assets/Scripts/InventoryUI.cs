@@ -9,11 +9,12 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Inventory inventaire;
     [SerializeField] private GameObject prefabSlot;
     private List<GameObject> inventaireUI = new List<GameObject>();
+
     private GameObject slotStock = null;
 
     void Start() 
     {
-        InitInventaireUI();
+        Invoke("InitInventaireUI",0.1f);
     }
 
     public GameObject GetSlotStock() {
@@ -42,6 +43,7 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < inventaire.GetTaille(); i++) {
             GameObject instantiatedPrefab = Instantiate(prefabSlot, transform.position, Quaternion.identity);
+            instantiatedPrefab.GetComponent<CasesUI>().SetInventory(inventaire.getNameInventory());
             inventaireUI.Add(instantiatedPrefab);
         }
 

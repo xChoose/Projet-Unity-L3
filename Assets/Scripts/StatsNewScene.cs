@@ -9,6 +9,9 @@ public class StatsNewScene : MonoBehaviour
     private Inventory inventaire;
     public bool lancement;
 
+    void Start() {
+    }
+
     void Awake()
     { 
         lancement  = GameManager.Instance.GetLancement();
@@ -25,13 +28,14 @@ public class StatsNewScene : MonoBehaviour
             GameManager.Instance.player.GetComponent<Inventory>().SetInventory(GameManager.Instance.GetInventory());
 
 
-            List<Cases> test = GameManager.Instance.player.GetComponent<Inventory>().GetInventory();
+            /*List<Cases> test = GameManager.Instance.player.GetComponent<Inventory>().GetInventory();
             for (int i =0; i < test.Count; i++) {
                 Debug.Log("Test :" + test[i].GetItem().GetIdItem());
-            }
+            }*/
 
 
             GameObject.Find("Content").GetComponent<InventoryUI>().SetInventory(GameManager.Instance.player.GetComponent<Inventory>());
+            GameObject.Find("ContentChest").GetComponent<InventoryUI>().SetInventory(GameObject.Find("Chest").GetComponent<Inventory>());
             playerScript.SetStamina(GameManager.Instance.GetStamina()); 
             playerScript.SetHealth(GameManager.Instance.GetHealth());
         }
