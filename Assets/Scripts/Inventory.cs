@@ -55,24 +55,29 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItem(Items item, int newCapacity){
+    public int AddItem(Items item, int newCapacity){
         Cases slot = FindItemCase(item);
         if (slot != null) {
             if (slot.GetCapacity() + newCapacity <= slot.GetItem().GetMaxCapacity()) {
                 slot.Add(item, newCapacity);
+                return 0;
             }
             else {
                 int reste = slot.GetItem().GetMaxCapacity() - slot.GetCapacity();
                 newCapacity -= reste;
                 slot.Add(item, reste);
                 AddItem(item,newCapacity);
+                return 0;
             }
         }
         else {
             slot = FindEmptyCase();
             if (slot != null) {
                 slot.Add(item, newCapacity);
-            } 
+                return 0;
+            } else {
+                return newCapacity;
+            }
         }
     }
 
@@ -109,6 +114,27 @@ public class Inventory : MonoBehaviour
                 inventaire[index].Vider();
             }
             inventaireUI.ShowItemAndQuantity();
+        }
+    }
+
+    public void DropItemTest(int index) {
+        inventaire[index].SetCapacity(inventaire[index].GetCapacity()-1);
+        if (inventaire[index].GetCapacity() <= 0) {
+            inventaire[index].Vider();
+        }
+    } 
+
+    public int CheckItemQuantity(int id) {
+        return inventaire[id].GetCapacity();
+    }
+
+    public int CheckItemId(int id){
+        return inventaire[id].GetItem().GetIdItem();
+    }
+
+    public void Fill(Items item) {
+        for (int i = 0; i < GetTaille(); i++) {
+            AddItem(item, 64);
         }
     }
 }

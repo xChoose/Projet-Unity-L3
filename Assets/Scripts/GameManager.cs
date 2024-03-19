@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         return lancement;
     }
 
-    void LoadInstancesItems() 
+    public void LoadInstancesItems() 
     {
         items = Resources.LoadAll<Items>("InstancesItems/");
     }
