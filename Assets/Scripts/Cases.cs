@@ -40,6 +40,7 @@ public class Cases
     public void Vider()
     {
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        item = gameManager.FindItemsDictionary(0);
+        gameManager.LoadInstancesItems();
+        item = gameManager.FindItemsDictionary(1);
     }
 }

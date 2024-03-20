@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     public Items item; 
     public Items item2;
-    [SerializeField] private int l;
+    [SerializeField] private int l = 7;
     [SerializeField] private static int w = 3;
     private List<Cases> inventaire;
     [SerializeField] private GameObject nomInventaire;
@@ -117,11 +117,16 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void DropItemTest(int index) {
-        inventaire[index].SetCapacity(inventaire[index].GetCapacity()-1);
-        if (inventaire[index].GetCapacity() <= 0) {
-            inventaire[index].Vider();
-        }
+    public int DropItemTest(int index) {
+        if (inventaire[index].GetCapacity() > 0) {
+            inventaire[index].SetCapacity(inventaire[index].GetCapacity()-1);
+            if (inventaire[index].GetCapacity() == 0) {
+                inventaire[index].Vider();
+            }
+            return 1;
+        } else {
+            return 0;
+        } 
     } 
 
     public int CheckItemQuantity(int id) {
@@ -135,6 +140,15 @@ public class Inventory : MonoBehaviour
     public void Fill(Items item) {
         for (int i = 0; i < GetTaille(); i++) {
             AddItem(item, 64);
+        }
+    }
+
+    public void InitInventaireTest(Items item){
+        Debug.Log("Test" + l + " , " + w);
+        inventaire = new List<Cases>();
+        for (int i = 0; i < l*w; i++) {
+             Debug.Log("Test");
+            inventaire.Add(new Cases(item,0));
         }
     }
 }
