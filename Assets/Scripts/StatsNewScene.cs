@@ -35,7 +35,9 @@ public class StatsNewScene : MonoBehaviour
 
 
             GameObject.Find("Content").GetComponent<InventoryUI>().SetInventory(GameManager.Instance.player.GetComponent<Inventory>());
-            GameObject.Find("ContentChest").GetComponent<InventoryUI>().SetInventory(GameObject.Find("Chest").GetComponent<Inventory>());
+            if (GameObject.Find("Portal").GetComponent<Portail>().GetScene() == "SampleScene") {
+                GameObject.Find("ContentChest").GetComponent<InventoryUI>().SetInventory(GameObject.Find("Chest").GetComponent<Inventory>());
+            }
             playerScript.SetStamina(GameManager.Instance.GetStamina()); 
             playerScript.SetHealth(GameManager.Instance.GetHealth());
         }

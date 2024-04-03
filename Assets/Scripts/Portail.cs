@@ -46,6 +46,10 @@ public class Portail : MonoBehaviour
         return etat;
     }
 
+    public string GetScene() {
+        return sceneToLoad;
+    }
+
     IEnumerator PortalOpen() {
         anim.Play("Portal open");
         yield return new WaitForSeconds(0.3f);
